@@ -17,15 +17,15 @@ This repository contains all planning, research, architecture, documentation, de
 
 ## Project Information
 
-| Item | Value |
-|--------|--------|
-| Project Name | Vectris |
-| Author | Christian Ventura |
-| Course | GIT 480 |
-| Project Type | Senior Project |
-| Focus Area | Backend Development |
-| Development Methodology | Systems-First Design |
-| Primary Goal | Healthcare Transportation Workflow Management |
+| Item                    | Value                                         |
+| ----------------------- | --------------------------------------------- |
+| Project Name            | Vectris                                       |
+| Author                  | Christian Ventura                             |
+| Course                  | GIT 480                                       |
+| Project Type            | Senior Project                                |
+| Focus Area              | Backend Development                           |
+| Development Methodology | Systems-First Design                          |
+| Primary Goal            | Healthcare Transportation Workflow Management |
 
 ## Problem Statement
 
@@ -104,6 +104,8 @@ api/
 - Standardize communication between systems
 - Support future frontend integration
 
+---
+
 ## assets/
 
 Stores project assets and supporting resources.
@@ -125,6 +127,8 @@ assets/
 - UI planning materials
 - Presentation assets
 - Demonstration materials
+
+---
 
 ## backend/
 
@@ -157,6 +161,8 @@ backend/
 - Workflow orchestration
 - Data processing
 
+---
+
 ## database/
 
 Contains all database-related artifacts.
@@ -179,6 +185,8 @@ database/
 - Migration history
 - Query optimization
 
+---
+
 ## deployment/
 
 Contains deployment and infrastructure resources.
@@ -199,6 +207,8 @@ deployment/
 - Infrastructure planning
 - Deployment procedures
 - Production readiness documentation
+
+---
 
 ## diagrams/
 
@@ -221,6 +231,8 @@ diagrams/
 - Workflow analysis
 - Architectural planning
 - Stakeholder communication
+
+---
 
 ## docs/
 
