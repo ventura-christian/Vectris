@@ -479,4 +479,4 @@ Implementation will begin after foundational planning artifacts have been comple
 **Christian Ventura**  
 GIT 480 Senior Project
 
-***Vectris __ Patient Transport Coordination Platform***
+***Vectris |>_>| Patient Transport Coordination Platform***
