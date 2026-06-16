@@ -1,19 +1,10 @@
 # VECTRIS
 
-## Patient Transport Coordination Platform
-
-**Senior Project: GIT 480**  
-**Author:** Christian Ventura
+Hospital Patient Transport Operations Platform
 
 ## Project Overview
 
 Vectris is a healthcare transportation coordination platform designed to streamline the process of requesting, assigning, tracking, and completing patient transport operations within a healthcare facility.
-
-The project focuses on reducing communication delays, improving transport visibility, increasing operational efficiency, and creating a centralized workflow for transport coordinators, dispatchers, and transport personnel.
-
-Rather than functioning as a simple scheduling application, Vectris is being designed as a complete operational system that models real-world hospital transport workflows from request creation through transport completion.
-
-This repository contains all planning, research, architecture, documentation, development assets, and source code associated with the GIT 480 Senior Project.
 
 ## Project Information
 
@@ -29,9 +20,14 @@ This repository contains all planning, research, architecture, documentation, de
 
 ## Problem Statement
 
-Many healthcare transportation processes rely on fragmented communication methods, manual coordination, phone calls, and inconsistent tracking procedures.
+Hospital transport operations often rely on fragmented communication methods such as:
 
-These challenges often result in:
+- Phone calls
+- Verbal requests
+- Manual tracking
+- Multiple disconnected systems
+
+These processes often result in:
 
 - Delayed patient movement
 - Reduced operational visibility
@@ -43,452 +39,238 @@ Vectris aims to centralize these operations through a structured workflow-driven
 
 ## Project Objectives
 
-### Primary Objectives
+### Operational Goals
 
-- Model real-world patient transport operations
-- Create a centralized request management system
+- Receive transport requests
+- Assign requests to transport staff
+- Track request progress
+- Complete transport requests
 - Improve transport visibility
-- Provide transport status tracking
-- Support operational reporting
-- Design scalable backend architecture
-- Demonstrate full software development lifecycle practices
+- Monitor operation metrics
 
-### Technical Objectives
+### Learning Goals
 
-- Design a normalized relational database
-- Create a RESTful API architecture
-- Implement workflow state management
-- Support audit and historical tracking
-- Follow modern Git workflows
-- Produce professional engineering documentation
+This project demonstrates:
+
+- Systems thinking
+- Backend engineering fundamentals
+- Database design (relational modeling)
+- REST API design
+- State management
+- Software architecture
+- GIT-based development workflow
+- Documentation-driven development
+
+## Core Product Vision
+
+Vectris is **dispatch operations console**.
+
+It is designed around operational decision-making rather than data entry.
+
+The dispatcher should be able to answer, within seconds:
+
+- What requests are waiting?
+- What transporters are available?
+- What transporters are currently busy?
+- Which requests require immediate attention?
+
+The system priorities **clarity over complexity** and **operational awareness over feature depth**.
+
+## Users
+
+### Dispatcher (Primary User)
+
+Responsible for:
+
+- Monitoring incoming transport requests
+- Assigning transporters
+- managing workflow state
+- Handling delays or exceptions
+- Maintaining operational flow
+
+### Transporter
+
+Responsible for:
+
+- Receiving assigned transport tasks
+- updating task status
+- Completing transport requests
+
+### Supervisor
+
+Key roles:
+
+- Monitoring overall operations
+- Reviewing performance metrics
+- Evaluating system efficiency
+
+## Minimum Viable Product (MVP)
+
+Vectris is successful if it completes only three workflows:
+
+### 1. Receive Requests
+
+Departments submit transport requests into the system.
+
+### 2. Assign Requests
+
+Dispatchers assign available transporters to requests.
+
+### 3. Complete Requests
+
+Transporters complete assigned requests and update status.
+
+> If these workflows function correctly, the MVP is complete.
+
+Everything else is optional.
+
+## Core Entities
+
+### Transport Request
+
+Represents a unit of work to be completed.
+
+**Fields:**
+
+- Patient Name
+
+- Origin Department
+
+- Destination Department
+
+- Equipment Requirements
+
+- Current Status
+
+- Time Created
+
+- Time in Queue
+
+### Transporter(staff entity)
+
+Represents hospital transport staff.
+
+**Fields:**
+
+- Name / ID
+
+- Availability Status
+
+- Current Assignment
+
+- Break Status
+
+- Workload State
+
+### Assignment
+
+Represents the relationship between a request and a transporter.
+
+**Fields:**
+
+- Transport Request ID
+
+- Transporter ID
+
+- Assignment Time
+
+- Assignment Status
+
+### Dispatch Event
+
+Represents system activity and state changes.
+
+**Examples:**
+
+- Request Created
+
+- Request Assigned
+
+- Status Updated
+
+- Request Completed
+
+- Delay Logged
+
+## System Design Principles
+
+### Systems First
+
+Workflow → Entities → Database → API → UI
+
+Do not design screens before defining data structures.
+
+### Operational Simplicity
+
+Only build features that directly support:
+
+- Receiving requests
+
+- Assigning requests
+
+- Completing requests
+
+Everything else is secondary.
+
+### Time-Based Priority (NOT Algorithmic Priority)
+
+Vectris does not implement priority scoring.
+
+Instead, it relies on:
+
+- Time in queue
+
+- Request age
+
+- Status visibility
+
+This avoids complexity and removes subjective prioritization logic.
+
+## Current Project Status
+
+### Phase
+
+Domain Modeling & System Design
+
+### Current Focus
+
+Define core entities:
+
+- Transport Request
+
+- Transporter
+
+- Assignment
+
+- Dispatch Event
+
+These entities will drive:
+
+Database → API → Dashboard
 
 ## Repository Structure
 
 ```text
 vectris/
 │
-├── api/
-├── assets/
-├── backend/
-├── database/
-├── deployment/
-├── diagrams/
+├── app/
+    ├── api/
+    ├── database/
+    ├── models/
+    ├── services/
+├── archive/
+    ├── project_state_v1.md
 ├── docs/
-├── scripts/
+    ├── architecture.md
+    ├── backlog.md
+    ├── diagrams.md
+    ├── project_state.md
+├── frontend/
 ├── tests/
-│
-├── PROJECT_STATE.md
 ├── README.md
-└── CHANGELOG.md
+├── requirements.txt
 ```
-
-## Directory Guide
-
-## api/
-
-Contains API-related documentation, specifications, and endpoint definitions.
-
-### Expected Contents
-
-```text
-api/
-├── openapi/
-├── endpoint-specifications/
-└── request-response-examples/
-```
-
-### API: Purpose
-
-- Define API contracts
-- Document endpoints
-- Standardize communication between systems
-- Support future frontend integration
 
 ---
 
-## assets/
-
-Stores project assets and supporting resources.
-
-### Assets: Examples
-
-```text
-assets/
-├── mockups/
-├── wireframes/
-├── icons/
-├── branding/
-└── screenshots/
-```
-
-### Assets: Purpose
-
-- Visual references
-- UI planning materials
-- Presentation assets
-- Demonstration materials
-
----
-
-## backend/
-
-Contains application source code.
-
-### Expected Responsibilities
-
-- Business logic
-- Service layer
-- Authentication
-- Authorization
-- Workflow processing
-- API implementation
-
-### Potential Structure
-
-```text
-backend/
-├── controllers/
-├── services/
-├── models/
-├── middleware/
-├── routes/
-└── utilities/
-```
-
-### Backend: Purpose
-
-- Core application functionality
-- Workflow orchestration
-- Data processing
-
----
-
-## database/
-
-Contains all database-related artifacts.
-
-### Database: Examples
-
-```text
-database/
-├── schemas/
-├── migrations/
-├── seed-data/
-├── diagrams/
-└── queries/
-```
-
-### Database: Purpose
-
-- Entity definitions
-- Database planning
-- Migration history
-- Query optimization
-
----
-
-## deployment/
-
-Contains deployment and infrastructure resources.
-
-### Deployment: Examples
-
-```text
-deployment/
-├── docker/
-├── environment/
-├── infrastructure/
-└── deployment-guides/
-```
-
-### Deployment: Purpose
-
-- Environment configuration
-- Infrastructure planning
-- Deployment procedures
-- Production readiness documentation
-
----
-
-## diagrams/
-
-Contains architectural and workflow visualizations.
-
-### Diagrams: Examples
-
-```text
-diagrams/
-├── workflow/
-├── architecture/
-├── database/
-├── sequence/
-└── network/
-```
-
-### Diagrams: Purpose
-
-- System communication visualization
-- Workflow analysis
-- Architectural planning
-- Stakeholder communication
-
----
-
-## docs/
-
-Central documentation repository.
-
-```text
-docs/
-├── architecture/
-├── decisions/
-├── operations/
-├── requirements/
-├── research/
-└── workflows/
-```
-
-### Docs: Purpose
-
-Maintain project knowledge throughout the software development lifecycle.
-
-### docs/architecture/
-
-Contains technical architecture documentation.
-
-Examples:
-
-- System architecture
-- Component diagrams
-- Service interactions
-- Technology stack decisions
-
----
-
-### docs/decisions/
-
-Architecture Decision Records (ADRs).
-
-Examples:
-
-- Database selection
-- Framework selection
-- Security decisions
-- Infrastructure decisions
-
-Purpose:
-
-Document why decisions were made rather than only what was built.
-
-### docs/operations/
-
-Operational procedures and support documentation.
-
-Examples:
-
-- Deployment procedures
-- Monitoring strategies
-- Incident response planning
-- Maintenance processes
-
-### docs/requirements/
-
-Business and technical requirements.
-
-Examples:
-
-- Functional requirements
-- Non-functional requirements
-- User stories
-- Acceptance criteria
-
-Purpose:
-
-Defines what the system must accomplish.
-
-### docs/research/
-
-Research conducted during project planning.
-
-Examples:
-
-- Industry analysis
-- Competitor analysis
-- Workflow research
-- Technical investigations
-
-Purpose:
-
-Provides evidence supporting design decisions.
-
-### docs/workflows/
-
-Business process documentation.
-
-Examples:
-
-- Patient transport lifecycle
-- Request creation process
-- Dispatch process
-- Completion process
-
-Purpose:
-
-Translate real-world operations into system workflows.
-
-## scripts/
-
-Utility scripts used during development.
-
-### Scripts: Examples
-
-```text
-scripts/
-├── database/
-├── setup/
-├── maintenance/
-└── automation/
-```
-
-### Scripts: Purpose
-
-- Environment setup
-- Data management
-- Developer productivity
-- Automation tasks
-
-## tests/
-
-Contains testing resources.
-
-### Tests: Examples
-
-```text
-tests/
-├── unit/
-├── integration/
-├── api/
-└── performance/
-```
-
-### Tests: Purpose
-
-- Validate functionality
-- Prevent regressions
-- Verify system behavior
-
-## Documentation Standards
-
-The project follows a documentation-first approach.
-
-Major project decisions should be documented before implementation whenever possible.
-
-Documentation categories include:
-
-- Requirements
-- Architecture
-- Research
-- Operational Procedures
-- Workflow Analysis
-- Decision Records
-
-## Development Philosophy
-
-This project follows a systems-first engineering approach.
-
-Before implementation:
-
-1. Understand the operational workflow.
-2. Define system requirements.
-3. Design entities and relationships.
-4. Create architecture documentation.
-5. Establish repository structure.
-6. Build implementation plans.
-7. Begin development.
-
-The objective is to design a system before writing code.
-
-## Planned Core Features
-
-## Request Management
-
-- Create transport requests
-- Prioritize requests
-- Track request lifecycle
-
-## Dispatch Operations
-
-- Assign transport personnel
-- Manage active transports
-- Monitor workloads
-
-## Status Tracking
-
-- Pending
-- Assigned
-- In Progress
-- Completed
-- Cancelled
-
-## Reporting
-
-- Operational metrics
-- Transport completion data
-- Utilization reporting
-
-## Audit Tracking
-
-- Historical activity records
-- Status changes
-- Assignment history
-
-## Technology Focus
-
-This project serves as a practical demonstration of:
-
-- Python
-- Backend Development
-- REST API Design
-- SQL Database Design
-- System Architecture
-- Git Workflows
-- Documentation Practices
-- Software Engineering Principles
-
-## Change Management
-
-Project changes are tracked through:
-
-```text
-CHANGELOG.md
-```
-
-The changelog documents:
-
-- Added features
-- Modified functionality
-- Documentation updates
-- Architectural changes
-
-## Current Project Phase
-
-**Phase:** Planning and System Design
-
-### Current Deliverables
-
-- Workflow Analysis
-- Entity Identification
-- Requirements Definition
-- Database Planning
-- Architecture Design
-- Repository Structure
-- Documentation Framework
-
-Implementation will begin after foundational planning artifacts have been completed and reviewed.
-
-## Author
-
-**Christian Ventura**  
-GIT 480 Senior Project
-
-***Vectris |>_>| Patient Transport Coordination Platform***
+***Vectris*** | Patient Transport Coordination Platform | christianVenturaDesigns 2026
