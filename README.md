@@ -198,8 +198,6 @@ Represents system activity and state changes.
 
 Workflow → Entities → Database → API → UI
 
-Do not design screens before defining data structures.
-
 ### Operational Simplicity
 
 Only build features that directly support:
