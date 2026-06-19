@@ -255,14 +255,19 @@ vectris/
     ├── api/
     ├── database/
     ├── models/
+        ├── entities.md
     ├── services/
 ├── archive/
     ├── project_state_v1.md
 ├── docs/
     ├── architecture.md
     ├── backlog.md
+    ├── build_state.md
+    ├── decisions.md
     ├── diagrams.md
+    ├── learning_state.md
     ├── project_state.md
+    ├── repository_map.md
 ├── frontend/
 ├── tests/
 ├── README.md
