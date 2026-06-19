@@ -1,6 +1,6 @@
 # PROJECT_STATE
 
-Last Updated: 12 June, 2026
+Last Updated: 18 June, 2026
 
 ## Current Phase
 
@@ -34,11 +34,16 @@ Completed:
 - Workflow analysis
 - MVP definition
 - Technology direction
+- Workflow stated defined (active, in_progress, complete)
+- Entities identified (transport_requests, transporters, request_assignment)
+- Data model fields defined
+- Junction table pattern decided for multi-transporter support
 
 In Progress:
 
 - System design
 - Data modeling
+- Schema finalization (continue working on destination field structure)
 
 Not Started:
 
@@ -75,9 +80,9 @@ Architecture:
 
 ## Next Actions
 
-1. Finalize workflow states
-2. Define entities
-3. Create database schema
+1. Resolve destination field: single text field or location + room_number pair
+2. Finalize and document full column schema in decisions.md
+3. Create database schema (SQL or SQLAlchemy models)
 4. Design API endpoints
 5. Build backend
 

@@ -103,8 +103,6 @@ Defines the application's domain entities and database models.
 
 - TransportRequest
 - Transporter
-- Department
-- DispatchEvent
 
 ### Guiding Principle(models)
 
