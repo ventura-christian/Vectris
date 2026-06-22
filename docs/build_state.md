@@ -1,5 +1,9 @@
 # BUILD STATE
 
+Last Updated: June 21, 2026
+
+---
+
 Completed:
 
 - Project definition
@@ -9,11 +13,13 @@ Completed:
 - Technology direction
 - Repository structure
 - Documentation structure
+- Schema design — all three tables finalized
+- entities.md — full schema documented
+- decisions.md — all design decisions recorded
 
 In Progress:
 
-- System design
-- Data modeling
+- None
 
 Broken:
 
@@ -21,19 +27,23 @@ Broken:
 
 Not Started:
 
-- Database implementation
-- API implementation
-- Frontend implementation
+- SQLAlchemy models (app/models/)
+- Alembic migrations
+- FastAPI API endpoints
+- Frontend dispatcher dashboard
 - Testing
 - Deployment
 - Presentation materials
 
 Technical Debt:
 
-- Authentication undecided
-- Real-time updates undecided
-- Deployment undecided
+- Authentication not yet decided
+- Real-time updates not yet decided
+- Deployment not yet decided
+- Status values enforced in app code only, not at the database level
+- Department names are free text with no validation
+- Cascade behavior on foreign key deletes not defined
 
 Next Task:
 
-- Finalize workflow states and define entities
+- Create app/models/transport_request.py — first SQLAlchemy model
