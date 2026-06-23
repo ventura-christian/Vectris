@@ -2,7 +2,33 @@
 
 ## Architecture Type
 
-Why monolithic architecture for Vectris?
+***What is a monolith?***
+
+This is a single deployable unit:
+
+- All of my code (API, business logic, database connection, frontend templates) lives in one codebase and runs as on frontend application.
+- When I start the application, everything starts.
+- When I deploy it, everything deploys.
+
+***Alternative: Microservices***
+
+The counterpart to a monolith is a microservice.
+
+In a microservices architecture, I would break the application into many small, independent services.
+
+Benefits of Microservices:
+
+- Each service can scale independently.
+- Teams can work on services independently without stepping on each other.
+- A failure in one service doesn't bring down the whole system.
+
+Trade-offs of microservices:
+
+- Large operational complexity.
+- Network calls between different services can fail, and I would have to think about timeouts, retries, or partial failures.
+- Debugging is much harder.
+
+***Why monolithic architecture for Vectris?***
 
 - I only have one codebase and one deployable unit.
 - All of my data  relationships(transport_requests, transporters, and request_assignments) heavily rely on each other and keeping all my code in one codebase simplifies my deployment.
@@ -65,20 +91,20 @@ The reasons behind this decision:
 - Readable syntax that prioritizes clarity
 - Strong web framework ecosystem
 
-***FastAPI vs Flask vs Django
+***FastAPI vs Flask vs Django***
 
-Why not Flask?
+***Why not Flask?***
 
 - It's a microframework that provides routing and request handling but none of the other robust features that Django and FastAPI offer.
 - I would have to incorporate all of the other tech I will need (database integration, templating, validation) from third party libraries.
 - I would have to make all structural decisions myself and there are better options that provide me those features baked in.
 
-Why no Django?
+***Why no Django?***
 
 - I felt this framework makes too many decisions and comes packed with an ORM (object relational mapping), an admin panel, a templating engine, authentication, a migration system and much more.
 - unfortunately, for my application and needs, this was overkill and was largely unnecessary for my design choice.
 
-Why FastAPI?
+***Why FastAPI?***
 
 - It's modern, high performance and designed around Python's type annotation system.
 - I get automatic data validation with Pydantic, automatic API documentation with Swagger UI, async support by default, and a clean dependency injection system.
@@ -87,10 +113,159 @@ Why FastAPI?
 - It is also the fastest between Flask and Django and the type annotation system will help me catch errors earlier.
 - I also liked the automatic documentation feature to help with my presentation.
 
+PostgreSQL vs Alternatives
+
+***PostgreSQL***:
+
+- It is a relational database, and relational means the data is organized into tables with rows and columns.
+- Those tables can reference each other through foreign keys. 
+- SQL is the language used to query it.
+
+***MySQL***:
+
+- It is another relational database, and it is very similar to PostgreSQL in concept.
+
+***SQLite***:
+
+- This is a relational database that runs as a file, not a server.
+- It's embedded directly into the application and is extremely simple to set up, no installation or configuration.
+- The trade off is that it is not suitable for production systems with concurrent writes.
+
+***MongoDB***:
+
+- This is a non-relational document database.
+- Instead of tables and rows, it stores JSON-like documents.
+- It is flexible because you don't need to define a schema upfront, but rather you just store the documents.
+- The trade-off is that you lose relational integrity, you can't enforce foreign keys, and you can't easily join data across collections the way you join tables in SQL.
+
+***Why PostgreSQL for Vectris?***
+
+My data is relational, with only three tables that have foreign keys between them, a junction table pattern that only made sense with a relational model.
+
+PostgreSQL is also the industry standard for the kind of system that I am building.
+
+***SQLAlchemy - What is an ORM?***
+
+ORM stands for Object Relational Mapper, and understanding why this exists requires understanding the problems they solve.
+
+- To simplify this explanation, Python thinks in objects and PostgreSQL thinks in tables. There is a mismatch that would occur between the two languages, and without the ORM I would have to make raw requests within a string in Python.
+- With SQLAlchemy, I can define a Python class that will represent a table. Each attribute of the class represents a column, and when I want to create a new row, I just create a new instance of the class and save it.
+- SQLAlchemy will translate it into SQL for me, and when I query it, I will get back Python objects, not raw tuples.
+
+***Alembic - What are migrations?***
+
+This is a migration management tool for SQLAlchemy. It tracks the history of every change I'll make to the database schema. It will store those changes as versions of migration files, and it will let me apply or roll back changes in order.
+
+- For my project Vectris, Alembic will allow me to go from no database to three tables and potentially from three tables to four tables. The evolution of this creation will be tracked, reproducible, and safe.
+
+***Jinja2 - What is Server-Side Rendering?***
+
+Client-side rendering(this is what React and Vue do):
+
+- The server sends a mostly empty HTML file and a large JavaScript file to the browser. The JavaScript runs in the browser, calls the API to fetch data, and builds the HTML dynamically on the client machine.
+
+Server-side rendering(what Jinja2 does):
+
+- The server does all the work, and when the browser requests a page, the server fetches the data from the database, injects it into an HTML template, and sends it back as a complete, fully rendered HTML page.
+
+Jinja2 is a templating engine for Python.
+
+Why does this fit Vectris?
+
+- My dispatcher dashboard is primarily a read display. It shows the current state of operations. A full page refresh when the dispatcher submits a form or assigns a transporter is completely acceptable under these conditions.
+- The added complexity of client-side rendering, where I would have to manage the state in JavaScript, handle API errors in the browser, and build a separate deployment, is just not justified for what I need.
+
 ## Data Flow - How a Transport Request Moves Through the System
+
+***The HTTP Request-Response Cycle***
+
+Everything on the web operates on requests and responses. A browser makes a request, and a server sends back a response. This is the foundation of how web applications work.
+
+HTTP is the protocol, which is the agreed-upon language that browsers and servers use to communicate.
+
+- When a dispatcher clicks a sign transporter in the dashboard, the browser sends an HTTP request to the FastAPI server. FastAPI will process it, interact with the database, and return an HTTP response, which the browser will then display.
+- Understanding this cycle is critical because the entire application is structured around it. Every endpoint I will write in FastAPI is a handler from one specific type of request at one specific URL.
+
+How data will move through Vectris: The Complete Lifecycle
+
+- Step 1: The browser will send a request.
+- Step 2: FastAPI will route the request.
+- Step 3: The route handler will call the service layer.
+- Step 4: The service layer will query the database.
+- Step 5: SQLAlchemy will send SQL to PostgreSQL.
+- Step 6: SQLAlchemy will return Python objects.
+- Step 7: The route handler will pass data to a Jinja2 template.
+- Step 8: Jinja2 will render the HTML.
+- Step 9: FastAPI will send the HTML response.
+- Step 10: The browser will display the page.
 
 ## Frontend Architecture
 
+***What the Frontend Is Not***:
+
+- It is not a JavaScript application.
+- There is no build step.
+
+***What the Frontend Is***:
+
+- A set of HTML template files that I will store in the frontend/ directory.
+- When a route handler in a FastAPI responds to a request, it picks the appropriate template, injects data into it, and sends back complete HTML. The browser just receives and displays.
+
+This means that the front end is tightly coupled to the back end, and they live in the same codebase. They run in the same processes, which is the monolith in practice.
+
+What the Dashboard Must Show
+
+- Active jobs in queue: *SELECT * FROM transport_requests WHERE status = 'active'*
+- Transport staff on shift: *SELECT * FROM transporters*
+- Transport staff currently on a task: *SELECT * FROM transporters WHERE status = 'on_job'* | I can also join against *request_assignment* to show which request each transporter is assigned to.
+
 ## Database Architecture
 
+Why Relational?
+
+- The data I will use has structure and relationships.
+- A transport request is meaningless without knowing what a transporter is.
+- An assignment is meaningless without knowing which request and which transporter it connects.
+- These references are exactly what relational databases are designed to handle, and why I chose to use it for this project.
+- Relational databases enforce referential integrity, which means I cannot create an assignment that references a transporter ID that does not exist.
+- The database itself will prevent invalid states.
+- This is not just a convenience but a guarantee, and the data will always be internally consistent. 
+
+The Three Tables
+
+*transport_requests* is the unit of work. A row in this table represents one patient transport job.
+
+- It has a life cycle:
+  - active -> in progress -> complete
+
+*transporters* is the staff roster. A row represents one human being who does transport work. They have an availability state.
+
+*request_assignment* is the junction table. It exists because a single request might require two transporters. Every assignment is its own row, so you can have as many assignments per request as needed.
+
+Foreign Keys and Why They Matter.
+
+- A foreign key is a column in one table that references the primary key of another table.
+- If I would try to insert an assignment with a *transport_request_id* that doesn't exist in *transport_requests*, PostgreSQL will reject it. This is the referential integrity guarantee.
+- Without foreign keys, I could have orphaned assignments that reference deleted requests, which would be corrupted data.
+
 ## What This System Does Not Do (By Design)
+
+Why This Section Exists
+
+***Authentication***
+
+- This is the system that verifies who you are.
+- Login screens, passwords, sessions, tokens, this is all authentication.
+- It is one of the most complex, security-sensitive areas of software engineering, and getting it wrong has real consequences.
+
+Vectris does not implement authentication, and the reason is because it adds significant complexity that does not affect whether the three core workflows function.
+
+My minimum viable product for this project is a proof of concept for a hospital environment where the dispatcher dashboard would be accessed on a secure internal network.
+
+Real Time Updates
+
+The dispatcher dashboard will be a page, and when it loads, it will show the data at that moment.
+
+If a new transport request comes in two minutes later, the dashboard doesn't automatically update, but rather the dispatcher would have to refresh the page.
+
+Real-time updates would require either web sockets or polling. Both add meaningful complexity and this project doesn't require those features to function and present to faculty.
