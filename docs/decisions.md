@@ -78,3 +78,84 @@ I considered adding a `locations` table so department names would be validated f
 I decided against both for MVP. A locations table would mean I have to build and populate a list of all hospital departments before any requests can be created. That's extra infrastructure before the core workflows even exist. Free-text is good enough for the scope and user base of this project. Same reasoning for the audit log, it's useful but not required for the three workflows to function.
 
 Both are reasonable things to add in a future version.
+
+## Dashboard Visualization Technology Determination
+
+I had several options for displaying my dashboard. For simplicity and clarity's sake, I went with Jinja2 as it has a native library built into Python and allows me to keep my project in a monolithic structure.
+
+### Frontend: Jinja2 Server-Side Templates
+
+What it is?
+
+- FastAPI renders HTML on the server using Python data and sends complete pages to the browser.
+
+Benefits
+
+- Native FastAPI support, no extra tooling
+- Everything lives in one Python codebase which follows the monolithic architecture
+- No JavaScript build pipeline
+- Browser receives complete HTML ,nothing to "fetch" after load
+- Easier to understand for a backend focused learner
+- It's fast to prototype
+
+Tradeoffs
+
+- Page refreshes to update data (no live updates without JavaScript)
+- Less interactive than a JS driven frontend
+- Tightly coupled to the backend which allows the frontend and backend to live together
+
+Why it fits my project
+
+- The dispatcher dashboard is a read heavy operational view. It doesn't need real-time reactivity or complex client side state. A full page refresh when assigning a transporter is acceptable. Jinja2 keeps the entire system in one place, which aligns with the monolithic architecture decision for my project.
+
+---
+
+These were the options I considered:
+
+### Plain HTML/JS as Static Files
+
+What it is?
+
+- FastAPI serves an index.html file. JavaScript in the browser calls your REST API endpoint and renders the results dynamically.
+
+Benefits
+
+- Clean separation between frontend and backend
+- Frontend can be built and tested independently
+- More "modern" architecture pattern
+
+Tradeoffs
+
+- Requires JavaScript knowledge to fetch and render data
+- Two layers to debug (frontend JS + backend API)
+- More moving parts for my minimum viable product
+- Still requires understanding REST (representational state transfer) API (application program interface) design before building anything visible
+
+Why this stack didn't fit my project
+
+- The added complexity of managing client-side JavaScript data fetching is not justified for a dashboard that three users will interact with. It also delays having anything visible until the API if fully functional.
+
+---
+
+### JavaScript Framework (React, Vue, Angular)
+
+What it is?
+
+- A dedicated frontend application, written in JavaScript, that communicates with your backend via API and gets deployed separately.
+
+Benefits
+
+- Industry standard for production web applications
+- Highly interactive, no page refreshes
+- Strong ecosystem and job market relevance
+
+Tradeoffs
+
+- Requires Node.js, npm, a build pipeline
+- Separate deployment from the backend (breaks the monolithic architecture design choice I made)
+- Steep learning curve on top of an already full backend build
+- Complete overkill for a 3 workflow dispatcher dashboard
+
+Why this stack didn't fit my project
+
+- The scope of this stack would require learning an entirely separate ecosystem and I wanted to make an application with Python. The monolithic architecture decision ruled it out completely and a JavaScript framework implies a separate frontend application, which is the opposite of a monolith.
