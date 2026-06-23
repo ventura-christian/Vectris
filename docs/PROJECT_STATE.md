@@ -1,6 +1,6 @@
 # PROJECT_STATE
 
-Last Updated: 18 June, 2026
+Last Updated: June 22, 2026
 
 ## Current Phase
 
@@ -38,12 +38,14 @@ Completed:
 - Entities identified (transport_requests, transporters, request_assignment)
 - Data model fields defined
 - Junction table pattern decided for multi-transporter support
+- System design complete
+- architecture.md documented (all 7 sections)
+- Frontend technology direction decided (Jinja2 server-side templates)
+- decisions.md updated with frontend technology decision
 
 In Progress:
 
-- System design
-- Data modeling
-- Schema finalization (continue working on destination field structure)
+- None
 
 Not Started:
 
@@ -65,7 +67,7 @@ Database:
 
 Frontend:
 
-- Minimal dashboard UI
+- Jinja2 server-side templates (rendered by FastAPI)
 
 Architecture:
 
@@ -80,14 +82,8 @@ Architecture:
 
 ## Next Actions
 
-1. Resolve destination field: single text field or location + room_number pair
-2. Finalize and document full column schema in decisions.md
-3. Create database schema (SQL or SQLAlchemy models)
-4. Design API endpoints
-5. Build backend
-
-## Documentation
-
-| architecture.md |
-backlog.md |
-diagrams.md |
+1. Create SQLAlchemy models (app/models/)
+2. Set up Alembic migrations
+3. Design and build API endpoints
+4. Build backend service layer
+5. Build frontend templates

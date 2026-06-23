@@ -1,6 +1,6 @@
 # BUILD STATE
 
-Last Updated: June 21, 2026
+Last Updated: June 22, 2026
 
 ---
 
@@ -15,7 +15,9 @@ Completed:
 - Documentation structure
 - Schema design — all three tables finalized
 - entities.md — full schema documented
-- decisions.md — all design decisions recorded
+- decisions.md — all design decisions recorded, frontend technology decision added
+- architecture.md — all seven sections complete
+- System design phase complete
 
 In Progress:
 
