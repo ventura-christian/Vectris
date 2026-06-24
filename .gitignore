@@ -1,0 +1,11 @@
+# Python
+venv/
+__pychache__/
+*.pyc
+*.pyo
+
+#Environment variables
+.env
+
+#macOS
+.DS_Store
