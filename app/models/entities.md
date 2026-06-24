@@ -40,6 +40,8 @@ This table holds everything about a patient transport job from creation to compl
 
 | `created_at` | TIMESTAMP | NOT NULL, DEFAULT NOW() | When the request was created. Set automatically. |
 
+| `completed_at` | TIMESTAMP | NULLABLE | Set when status transitions to 'complete'.  NULL means the request is not yet complete. |
+
 ### Status values: transport tasks
 
 active → in_progress → complete
