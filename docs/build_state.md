@@ -1,6 +1,6 @@
 # BUILD STATE
 
-Last Updated: June 22, 2026
+Last Updated: June 23, 2026
 
 ---
 
@@ -18,6 +18,9 @@ Completed:
 - decisions.md — all design decisions recorded, frontend technology decision added
 - architecture.md — all seven sections complete
 - System design phase complete
+- completed_at column added to transport_requests in entities.md
+- PostgreSQL 16 installed and running
+- vectris database created
 
 In Progress:
 
@@ -48,4 +51,4 @@ Technical Debt:
 
 Next Task:
 
-- Create app/models/transport_request.py — first SQLAlchemy model
+- Create Python virtual environment inside project directory (Phase 0, Step 3)

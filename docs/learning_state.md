@@ -1,6 +1,6 @@
 # LEARNING STATE
 
-Last Updated: June 22, 2026
+Last Updated: June 23, 2026
 
 ---
 
@@ -27,6 +27,9 @@ Understood:
 - What database migrations are and why Alembic is needed
 - FastAPI vs Flask vs Django tradeoffs
 - PostgreSQL vs MySQL vs SQLite vs MongoDB tradeoffs
+- PostgreSQL installation and service management on macOS
+- Creating a PostgreSQL database from the terminal
+- What PATH is and why tools need to be on it
 
 Partially Understood:
 

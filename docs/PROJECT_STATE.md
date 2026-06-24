@@ -1,6 +1,6 @@
 # PROJECT_STATE
 
-Last Updated: June 22, 2026
+Last Updated: June 23, 2026
 
 ## Current Phase
 
@@ -42,6 +42,9 @@ Completed:
 - architecture.md documented (all 7 sections)
 - Frontend technology direction decided (Jinja2 server-side templates)
 - decisions.md updated with frontend technology decision
+- PostgreSQL installed, running, and added to PATH
+- Vectris database created
+- completed_at column added to transport_requests schema
 
 In Progress:
 
