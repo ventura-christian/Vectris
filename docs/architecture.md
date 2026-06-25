@@ -113,25 +113,25 @@ The reasons behind this decision:
 - It is also the fastest between Flask and Django and the type annotation system will help me catch errors earlier.
 - I also liked the automatic documentation feature to help with my presentation.
 
-PostgreSQL vs Alternatives
+***PostgreSQL vs Alternatives***
 
-***PostgreSQL***:
+PostgreSQL:
 
 - It is a relational database, and relational means the data is organized into tables with rows and columns.
 - Those tables can reference each other through foreign keys. 
 - SQL is the language used to query it.
 
-***MySQL***:
+MySQL:
 
 - It is another relational database, and it is very similar to PostgreSQL in concept.
 
-***SQLite***:
+SQLite:
 
 - This is a relational database that runs as a file, not a server.
 - It's embedded directly into the application and is extremely simple to set up, no installation or configuration.
 - The trade off is that it is not suitable for production systems with concurrent writes.
 
-***MongoDB***:
+MongoDB:
 
 - This is a non-relational document database.
 - Instead of tables and rows, it stores JSON-like documents.
@@ -144,9 +144,16 @@ My data is relational, with only three tables that have foreign keys between the
 
 PostgreSQL is also the industry standard for the kind of system that I am building.
 
+PostgreSQL was also preferred for ACID (a set of guarantees that relational databases make about every transaction):
+
+- **Atomicity**: A transaction either completes entirely or doesn't happen at all.
+- **Consistency**: The database will only accept data that satisfies every rule I defined - foreign keys, NOT NULL constraints, data types.
+- **Isolation**: This ensures if two operations occur at the same, they don't interfere with each other.
+- **Durability**: This ensures that once a transaction is committed, it's permanent - a server crash, a power outage, or a restart, the data will survive.
+
 ***SQLAlchemy - What is an ORM?***
 
-ORM stands for Object Relational Mapper, and understanding why this exists requires understanding the problems they solve.
+**ORM** stands for Object Relational Mapper, and understanding why this exists requires understanding the problems they solve.
 
 - To simplify this explanation, Python thinks in objects and PostgreSQL thinks in tables. There is a mismatch that would occur between the two languages, and without the ORM I would have to make raw requests within a string in Python.
 - With SQLAlchemy, I can define a Python class that will represent a table. Each attribute of the class represents a column, and when I want to create a new row, I just create a new instance of the class and save it.
