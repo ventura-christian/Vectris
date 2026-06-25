@@ -14,7 +14,7 @@ Last Updated: June 21, 2026
 
 ---
 
-## transport_requests
+### transport_requests
 
 This table holds everything about a patient transport job from creation to completion.
 
@@ -44,7 +44,7 @@ This table holds everything about a patient transport job from creation to compl
 
 ### Status values: transport tasks
 
-active → in_progress → complete
+### Active → In Progress → Complete
 
 - `active` — request created, no one assigned yet
 - `in_progress` — transporter assigned, job underway
@@ -52,7 +52,7 @@ active → in_progress → complete
 
 ---
 
-## transporters
+### transporters
 
 This table holds information about transport staff and whether they are available.
 
@@ -72,7 +72,7 @@ This table holds information about transport staff and whether they are availabl
 
 ---
 
-## request_assignment
+### request_assignment
 
 This is a junction table that connects transport requests to the transporters assigned to them. It exists as its own table because a single request can require more than one transporter and I figured a single column on the request table couldn't handle that.
 
@@ -88,7 +88,7 @@ This is a junction table that connects transport requests to the transporters as
 
 ### Relationships
 
-transport_requests <-> request_assignment <-> transporters
+**transport_requests** <-> **request_assignment** <-> **transporters**
 
 One request can have many assignments. One transporter can have many assignments over time.
 
