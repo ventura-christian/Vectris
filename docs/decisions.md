@@ -2,7 +2,7 @@
 
 This file tracks the decisions I made while designing Vectris and why I made them.
 
-Last Updated: June 21, 2026
+Last Updated: June 24, 2026
 
 ---
 
@@ -159,3 +159,29 @@ Tradeoffs
 Why this stack didn't fit my project
 
 - The scope of this stack would require learning an entirely separate ecosystem and I wanted to make an application with Python. The monolithic architecture decision ruled it out completely and a JavaScript framework implies a separate frontend application, which is the opposite of a monolith.
+
+## requirements.txt Content
+
+Why each entry?
+
+- fastapi: This is the web framework. Handles routing, validation, and serving your API and HTML pages.
+- uvicorn: This is the server that will run FastAPI. Uvicorn listens for incoming HTTP requests and hands them to FastAPI.
+- sqlalchemy: This is the object relation mapper. It lets me write Python classes instead of raw SQL.
+- alembic: This is the migration tool. It tracks and applies changes to my database schema.
+- psycopg2-binary: This is the driver that lets Python talk to PostgreSQL. SQLAlchemy knows how to generate SQL, but it needs this library to actually send it to a PostgreSQL database. The "-binary" version includes everything pre-compiled so I don't need extra system dependencies.
+- pydantic: This is the data validation. FastAPI uses this to validate incoming request data.
+- python-dotenv: This reads the .env file and loads its values into the environment. This will allow Vectris to read the database URL without it being hardcoded.
+- jinja2: This is the templating engine for the frontend.
+
+## Why I chose to use SQLAlchemy vs Raw SQL: the tradeoff
+
+- I will use SQLAlchemy to generate the SQL to inject into my queries and this allows my queries to use the Base class and inherit all of the information contained within that pattern.
+- I can then run a simple SQLAlchemy script that will generate all the necessary information when adding things into my tables.
+- For most situations, this may not be the preferred method for debugging purposes (I won't be able to explicitly see  where bugs might originate from because I didn't write the raw SQL). But for my project and the simple queries, this makes the process seamless and simple to use.
+- The ORM (object relational mapping) version is less error prone that writing raw SQL.
+
+## Dependency Injection: Why should I care?
+
+- This pattern allows database sessions to be provided to my application without the developer having to hardcode them for every request.
+- The information is provided to the developer and removes friction from having to manage all that data each time.
+- Every API endpoint that touches the database needs a database session which is the connection to PostgreSQL that it uses to run queries. The dependency injection handles this for me and removes the friction I explained in the previous two sentences.

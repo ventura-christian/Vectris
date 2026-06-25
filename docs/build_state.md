@@ -1,6 +1,6 @@
 # BUILD STATE
 
-Last Updated: June 23, 2026
+Last Updated: June 24, 2026
 
 ---
 
@@ -21,6 +21,14 @@ Completed:
 - completed_at column added to transport_requests in entities.md
 - PostgreSQL 16 installed and running
 - vectris database created
+- Python virtual environment created and activated
+- .gitignore created and committed
+- requirements.txt populated with all eight dependencies
+- All dependencies installed and verified
+- .env file created with database connection URL
+- Virtual environment confirmed able to connect to vectris database
+- Phase 0 complete
+- Phase 1 complete — all five technology concepts taught and understood
 
 In Progress:
 
@@ -51,4 +59,4 @@ Technical Debt:
 
 Next Task:
 
-- Create Python virtual environment inside project directory (Phase 0, Step 3)
+- Write app/database/session.py — SQLAlchemy engine, session factory, and Base

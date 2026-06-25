@@ -1,6 +1,6 @@
 # LEARNING STATE
 
-Last Updated: June 23, 2026
+Last Updated: June 24, 2026
 
 ---
 
@@ -30,12 +30,24 @@ Understood:
 - PostgreSQL installation and service management on macOS
 - Creating a PostgreSQL database from the terminal
 - What PATH is and why tools need to be on it
+- What pip is and how it differs from pip3 outside a virtual environment
+- What a virtual environment is and why it isolates project dependencies
+- What .gitignore is and how Git uses it to exclude files
+- ACID guarantees and why they matter in a hospital context
+- SQLAlchemy Declarative Base pattern and how Python classes map to tables
+- Alembic migration workflow — init, autogenerate, upgrade, version tracking
+- FastAPI dependency injection using Depends()
+- FastAPI type hint validation and 422 error responses
+- Async versus sync in FastAPI at a conceptual level
+- The difference between SQLAlchemy models and Pydantic schemas
+- Which fields to exclude from a Pydantic input schema and why
 
 Partially Understood:
 
 - Database normalization
 - REST API design
 - Translating a schema into Python model classes
+- Pydantic — needs deeper review at start of next session
 
 Not Learned Yet:
 
@@ -49,5 +61,4 @@ Not Learned Yet:
 
 Current Learning Objective:
 
-- Write the first SQLAlchemy model: app/models/transport_request.py
-- Understand how SQLAlchemy models map to the schema defined in entities.md
+- Write app/database/session.py — understand SQLAlchemy engine, session factory, and Base before writing any model
