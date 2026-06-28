@@ -7,7 +7,7 @@ from app.database.session import Base
 
 class TransportRequest(Base):
     """
-    SQLAlchemy model for the transport_request table.
+    SQLAlchemy model for the transport_requests table.
     """
 
     __tablename__ = "transport_requests"
