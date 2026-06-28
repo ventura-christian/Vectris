@@ -12,3 +12,9 @@ __pychache__/
 
 # Testing
 testing
+
+# .vscode folder
+.vscode/
+
+# vectris session SQL
+vectris.session.sql
