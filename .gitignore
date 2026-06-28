@@ -4,8 +4,11 @@ __pychache__/
 *.pyc
 *.pyo
 
-#Environment variables
+# Environment variables
 .env
 
-#macOS
+# macOS
 .DS_Store
+
+# Testing
+testing
