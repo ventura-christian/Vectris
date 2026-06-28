@@ -18,29 +18,19 @@ Last Updated: June 21, 2026
 
 This table holds everything about a patient transport job from creation to completion.
 
-| Column | Type | Constraints | Notes |
-
-| `id` | SERIAL | PRIMARY KEY | Auto-generated. Each request gets a unique ID. |
-
-| `patient_name` | VARCHAR | NOT NULL | Name of the patient being transported. |
-
-| `origin_department` | VARCHAR | NOT NULL | Department where the patient is being picked up. |
-
-| `origin_room` | VARCHAR | NOT NULL | Room number at the pickup location. |
-
-| `destination_department` | VARCHAR | NOT NULL | Department where the patient is being delivered. |
-
-| `equipment_needed` | VARCHAR | NULLABLE  | Wheelchair, stretcher, etc. Null means no equipment needed. |
-
-| `biohazard` | BOOLEAN | NOT NULL, DEFAULT FALSE | Whether biohazard precautions are required. |
-
-| `transporters_required` | INTEGER | NOT NULL, DEFAULT 1 | How many staff are needed for this job. |
-
-| `status`  | VARCHAR | NOT NULL, DEFAULT 'active' | Current state of the request. |
-
-| `created_at` | TIMESTAMP | NOT NULL, DEFAULT NOW() | When the request was created. Set automatically. |
-
-| `completed_at` | TIMESTAMP | NULLABLE | Set when status transitions to 'complete'.  NULL means the request is not yet complete. |
+| Column                   | Type      | Constraints                | Notes                                                                   |
+| ------------------------ | --------- | -------------------------- | ----------------------------------------------------------------------- |
+| `id`                     | SERIAL    | PRIMARY KEY                | Auto-generated. Each request gets a unique ID.                          |
+| `patient_name`           | VARCHAR   | NOT NULL                   | Name of the patient being transported.                                  |
+| `origin_department`      | VARCHAR   | NOT NULL                   | Department where the patient is being picked up.                        |
+| `origin_room`            | VARCHAR   | NOT NULL                   | Room number at the pickup location.                                     |
+| `destination_department` | VARCHAR   | NOT NULL                   | Department where the patient is being delivered.                        |
+| `equipment_needed`       | VARCHAR   | NULLABLE                   | Wheelchair, stretcher, etc. Null means no equipment needed.             |
+| `biohazard`              | BOOLEAN   | NOT NULL, DEFAULT FALSE    | Whether biohazard precautions are required.                             |
+| `transporters_required`  | INTEGER   | NOT NULL, DEFAULT 1        | How many staff are needed for this job.                                 |
+| `status`                 | VARCHAR   | NOT NULL, DEFAULT 'active' | Current state of the request.                                           |
+| `created_at`             | TIMESTAMP | NOT NULL, DEFAULT NOW()    | When the request was created. Set automatically.                        |
+| `completed_at`           | TIMESTAMP | NULLABLE                   | Set when status transitions to 'complete'. NULL means not yet complete. |
 
 ### Status values: transport tasks
 
@@ -56,13 +46,11 @@ This table holds everything about a patient transport job from creation to compl
 
 This table holds information about transport staff and whether they are available.
 
-| Column | Type | Constraints | Notes |
-
-| `id` | SERIAL | PRIMARY KEY | Auto-generated unique ID. |
-
-| `name` | VARCHAR | NOT NULL | Full name of the staff member. |
-
-| `status` | VARCHAR | NOT NULL, DEFAULT 'available' | Current availability. |
+| Column   | Type    | Constraints                   | Notes                          |
+| -------- | ------- | ----------------------------- | ------------------------------ |
+| `id`     | SERIAL  | PRIMARY KEY                   | Auto-generated unique ID.      |
+| `name`   | VARCHAR | NOT NULL                      | Full name of the staff member. |
+| `status` | VARCHAR | NOT NULL, DEFAULT 'available' | Current availability.          |
 
 ### Status values: transporters
 
@@ -76,15 +64,12 @@ This table holds information about transport staff and whether they are availabl
 
 This is a junction table that connects transport requests to the transporters assigned to them. It exists as its own table because a single request can require more than one transporter and I figured a single column on the request table couldn't handle that.
 
-| Column | Type | Constraints | Notes |
-
-| `id`  | SERIAL | PRIMARY KEY | Auto-generated unique ID. |
-
-| `transport_request_id` | INTEGER | NOT NULL, FK → transport_requests.id | The request being assigned. |
-
-| `transporter_id` | INTEGER  | NOT NULL, FK → transporters.id | The transporter being assigned. |
-
-| `assigned_at` | TIMESTAMP | NOT NULL, DEFAULT NOW() | When the assignment was made. |
+| Column                 | Type      | Constraints                          | Notes                           |
+| ---------------------- | --------- | ------------------------------------ | ------------------------------- |
+| `id`                   | SERIAL    | PRIMARY KEY                          | Auto-generated unique ID.       |
+| `transport_request_id` | INTEGER   | NOT NULL, FK → transport_requests.id | The request being assigned.     |
+| `transporter_id`       | INTEGER   | NOT NULL, FK → transporters.id       | The transporter being assigned. |
+| `assigned_at`          | TIMESTAMP | NOT NULL, DEFAULT NOW()              | When the assignment was made.   |
 
 ### Relationships
 
