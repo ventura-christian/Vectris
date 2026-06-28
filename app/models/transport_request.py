@@ -1,9 +1,15 @@
-from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, text
+from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP
 from sqlalchemy.sql import func
+
+# Models inherit from 'Base'; denotes location of the class
 from app.database.session import Base
 
 
 class TransportRequest(Base):
+    """
+    SQLAlchemy model for the transport_request table.
+    """
+
     __tablename__ = "transport_requests"
 
     id = Column(Integer, primary_key=True)
