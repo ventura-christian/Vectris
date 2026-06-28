@@ -9,5 +9,5 @@ class Transporter(Base):
 __tablename__ = "transporters"
 
 id = Column(Integer, primary_key=True)
-name = Column(Integer, nullable=False)
+name = Column(String, nullable=False)
 status = Column(String, nullable=False, default="available")
