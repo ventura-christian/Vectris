@@ -1,8 +1,6 @@
 # BUILD STATE
 
-Last Updated: June 24, 2026
-
----
+Last Updated: June 28, 2026
 
 Completed:
 
@@ -29,6 +27,15 @@ Completed:
 - Virtual environment confirmed able to connect to vectris database
 - Phase 0 complete
 - Phase 1 complete — all five technology concepts taught and understood
+- app/database/session.py — engine, SessionLocal, and Base
+- app/models/transport_request.py — TransportRequest SQLAlchemy model
+- app/models/transporter.py — Transporter SQLAlchemy model
+- app/models/request_assignment.py — RequestAssignment SQLAlchemy model with foreign keys
+- app/__init__.py, app/database/__init__.py, app/models/__init__.py created
+- Alembic initialized and configured
+- First migration generated and applied
+- All three tables verified in PostgreSQL
+- Phase 2 complete
 
 In Progress:
 
@@ -40,8 +47,6 @@ Broken:
 
 Not Started:
 
-- SQLAlchemy models (app/models/)
-- Alembic migrations
 - FastAPI API endpoints
 - Frontend dispatcher dashboard
 - Testing
@@ -59,4 +64,4 @@ Technical Debt:
 
 Next Task:
 
-- Write app/database/session.py — SQLAlchemy engine, session factory, and Base
+- Write main.py — FastAPI app entry point

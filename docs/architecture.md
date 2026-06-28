@@ -1,5 +1,7 @@
 # Vectris Software Architecture Decisions & Explanations
 
+Last Updated: June 28, 2026
+
 ## Architecture Type
 
 ***What is a monolith?***
@@ -118,7 +120,7 @@ The reasons behind this decision:
 PostgreSQL:
 
 - It is a relational database, and relational means the data is organized into tables with rows and columns.
-- Those tables can reference each other through foreign keys. 
+- Those tables can reference each other through foreign keys.
 - SQL is the language used to query it.
 
 MySQL:
@@ -236,18 +238,30 @@ Why Relational?
 - These references are exactly what relational databases are designed to handle, and why I chose to use it for this project.
 - Relational databases enforce referential integrity, which means I cannot create an assignment that references a transporter ID that does not exist.
 - The database itself will prevent invalid states.
-- This is not just a convenience but a guarantee, and the data will always be internally consistent. 
+- This is not just a convenience but a guarantee, and the data will always be internally consistent.
 
 The Three Tables
 
-*transport_requests* is the unit of work. A row in this table represents one patient transport job.
+---
 
+> transport_requests
+
+- This is the unit of work.
+- A row in this table represents one patient transport job.
 - It has a life cycle:
-  - active -> in progress -> complete
+`active -> in progress -> complete`
 
-*transporters* is the staff roster. A row represents one human being who does transport work. They have an availability state.
+> transporters
 
-*request_assignment* is the junction table. It exists because a single request might require two transporters. Every assignment is its own row, so you can have as many assignments per request as needed.
+- This is the staff roster.
+- A row represents one human being who does transport work.
+- They have an availability state.
+
+> request_assignment
+
+- This is the junction table. It exists because a single request might require two transporters. Every assignment is its own row, so you can have as many assignments per request as needed.
+
+---
 
 Foreign Keys and Why They Matter.
 
@@ -276,3 +290,88 @@ The dispatcher dashboard will be a page, and when it loads, it will show the dat
 If a new transport request comes in two minutes later, the dashboard doesn't automatically update, but rather the dispatcher would have to refresh the page.
 
 Real-time updates would require either web sockets or polling. Both add meaningful complexity and this project doesn't require those features to function and present to faculty.
+
+## What is Pydantic?
+
+Pydantic is a data validation library. It takes a class definition with typed fields, give it some raw data and it will either give you back a clean, validated Python object, or it raises an error telling you exactly what was wrong.
+
+- FastAPI choses Pydantic as the validation engine because they share the same philosophy: use Python type hints to describe data, and enforce those description at runtime.
+
+## Where does Pydantic live in the stack I chose for Vectris?
+
+`Browser -> FastAPI (API layer) -> Pydantic validates input -> Service Layer -> SQLAlchemy -> PostgreSQL`
+
+- Pydantic lives at the entry point of the API layer.
+- Before the route handler does anything (call a service or touch the database) Pydantic has already checked that the incoming data is shaped correctly.
+
+If the input is wrong, Pydantic stops the request and FastAPI returns a 422 Unprocessable Entity error automatically.
+
+## Pydantic vs. SQLAlchemy
+
+Purpose:
+
+- SQLAlchemy represents a row in a database table
+- Pydantic represents data coming in or going out of the API
+
+Knows About:
+
+- SQLAlchemy: columns, foreign keys, relationships
+- Pydantic: fields, types, validation rules
+
+Used when:
+
+- SQLAlchemy: reading/writing to PostgreSQl
+- Pydantic: validating HTTP request bodies, shaping HTTP responses
+
+Created by:
+
+- SQLAlchemy: itself when querying
+- Pydantic: FastAPI when a request arrives
+
+### Vectris Example form submission example
+
+When a dispatcher submits a form to create a new transport request, this sequence happens (for reference):
+
+1. FastAPI receives the JSON body and passes it to `TransportRequestCreate` (a Pydantic model). Pydantic validates the shape.
+2. The service layer takes the validated data and creates a `TransportRequest` instance (a SQLAlchemy model).
+3. SQLAlchemy writes that instance to PostgreSQL as a row in `Transport_requests`.
+4. When you return data to the browser, you use another Pydantic model, `TransportRequestOut` to control exactly which fields are sent back. I don't want to accidentally serialize internal database state.
+
+## When to use which model?
+
+- Use a SQLAlchemy model when I need data to persist or to be read from the database. This is the data representation of a table row.
+- Use a Pydantic model when I am receiving input from an HTTP request body, returning data as an API response or if I am validating any data structure at a boundary(input/output).
+
+## File Section
+
+### File `app/database/session.py`
+
+What this file does:
+
+- Creates the object that knows how to talk to the PostgreSQl database. It holds the connection URL and manages the connection pool.
+- Creates a reusable template for opening database sessions. Each request gets its own session.
+- Defines the `Base` which is the class that the SQLAlchemy models will inherit from. It's what connects the Python classes to the database.
+
+This file is the foundation that the rest of Vectris will depend on.
+The models import `Base` from here.
+The dependency injection imports `SessionLocal` from here.
+
+### File `app/models/transport_requests.py`
+
+What this file does:
+
+- This is the first SQLAlchemy file.
+- It defines the `transport_requests` table as a Python class.
+- Every column I designed in `entities.md` becomes a class attribute in this file.
+
+### File `app/models/request_assignment.py`
+
+What this file does:
+
+- This file introduces a foreign key relationship.
+- The `Foreign_key("transport_request.id")` tells SQLAlchemy that the column must match and reference a valid `id` in the `transport_requests` table.
+- If that ID doesn't exist then the insert is rejected.
+
+### File `__init__.py`
+
+Python needs these files to treat folders as importable packages. Without them, when Alembic tries to import, the models will fail.

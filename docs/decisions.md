@@ -1,10 +1,10 @@
 # DECISIONS
 
-This file tracks the decisions I made while designing Vectris and why I made them.
-
-Last Updated: June 24, 2026
+Last Updated: June 28, 2026
 
 ---
+
+**This file tracks the decisions I made while designing Vectris and why I made them.**
 
 ## Column Naming Convention
 
@@ -185,3 +185,9 @@ Why each entry?
 - This pattern allows database sessions to be provided to my application without the developer having to hardcode them for every request.
 - The information is provided to the developer and removes friction from having to manage all that data each time.
 - Every API endpoint that touches the database needs a database session which is the connection to PostgreSQL that it uses to run queries. The dependency injection handles this for me and removes the friction I explained in the previous two sentences.
+
+## Alembic Configuration — Models Imported in env.py
+
+To enable autogenerate, all three SQLAlchemy models are explicitly imported in
+migrations/env.py and target_metadata is set to Base.metadata. Without these
+imports the models are never registered and Alembic generates an empty migration.

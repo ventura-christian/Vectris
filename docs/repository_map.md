@@ -1,5 +1,7 @@
 # Repository Map
 
+Last Updated: June 28, 2026
+
 ## Purpose(repository map)
 
 This document defines the responsibility of each directory within the Vectris project repository.
@@ -149,6 +151,21 @@ Implements the persistence layer.
 - Initialize database resources
 - Provide ORM configuration
 - Support data persistence
+
+## migrations/
+
+### Purpose
+
+Contains Alembic migration files that track database schema changes.
+
+### Responsibilities
+
+- Version control for database schema
+- Apply and roll back schema changes safely
+
+### Guiding Principle(migrations)
+
+Every change to the database schema goes through a migration, never applied manually.
 
 ### Technology
 

@@ -1,10 +1,10 @@
 # PROJECT_STATE
 
-Last Updated: June 24, 2026
+Last Updated: June 28, 2026
 
 ## Current Phase
 
-Database Design
+API Layer
 
 ## Project Summary
 
@@ -50,6 +50,10 @@ Completed:
 - requirements.txt populated and all dependencies installed
 - .env file created with database connection URL
 - Database connection verified through virtual environment
+- SQLAlchemy models written for all three entities
+- Alembic initialized and first migration applied
+- All three tables verified in PostgreSQL
+- Phase 2 complete
 
 In Progress:
 
@@ -90,7 +94,8 @@ Architecture:
 
 ## Next Actions
 
-1. Write app/database/session.py
-2. Write three SQLAlchemy model files
-3. Initialize Alembic and run first migration
-4. Verify all three tables exist in PostgreSQL
+1. Write main.py
+2. Write Pydantic schemas (app/schemas/)
+3. Write service layer
+4. Write API endpoints
+5. Build dispatcher dashboard

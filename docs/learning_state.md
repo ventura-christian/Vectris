@@ -1,8 +1,6 @@
 # LEARNING STATE
 
-Last Updated: June 24, 2026
-
----
+Last Updated: June 28, 2026
 
 Understood:
 
@@ -41,24 +39,24 @@ Understood:
 - Async versus sync in FastAPI at a conceptual level
 - The difference between SQLAlchemy models and Pydantic schemas
 - Which fields to exclude from a Pydantic input schema and why
+- SQLAlchemy models — writing Python classes that map to database tables
+- Alembic migrations — init, autogenerate, upgrade workflow
+- Database sessions — engine, SessionLocal, Base pattern
+- Pydantic — schemas vs SQLAlchemy models, input/output separation, which fields to exclude
 
 Partially Understood:
 
 - Database normalization
 - REST API design
 - Translating a schema into Python model classes
-- Pydantic — needs deeper review at start of next session
 
 Not Learned Yet:
 
-- SQLAlchemy
-- Alembic migrations
 - FastAPI dependency injection
-- Database sessions
 - Service layer implementation
 - Pydantic validation models
 - Testing
 
 Current Learning Objective:
 
-- Write app/database/session.py — understand SQLAlchemy engine, session factory, and Base before writing any model
+- Write main.py and understand how FastAPI wires together routes, templates, and the database
