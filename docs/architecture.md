@@ -1,6 +1,6 @@
 # Vectris Software Architecture Decisions & Explanations
 
-Last Updated: June 28, 2026
+Last Updated: June 29, 2026
 
 ## Architecture Type
 
@@ -372,6 +372,23 @@ What this file does:
 - The `Foreign_key("transport_request.id")` tells SQLAlchemy that the column must match and reference a valid `id` in the `transport_requests` table.
 - If that ID doesn't exist then the insert is rejected.
 
-### File `__init__.py`
+## File `__init__.py`
 
 Python needs these files to treat folders as importable packages. Without them, when Alembic tries to import, the models will fail.
+
+## File `transport_request.py`
+
+This file provides two Pydantic models:
+
+- An input schema (Create) which is what the caller sends in.
+- An output schema (Out) which is what the API sends back.
+
+If one schema was used for both requests, I could potentially expose fields I shouldn't or hide fields I would need to return.
+
+Separate schemas let me explicitly control at each boundary.
+
+## File `transport_request_service.py`
+
+This file implements the business logic for transport requests. 
+
+It enforces the status state machine (`active` -> `in_progress` -> `complete`), sets `completed_at` when a request is closed, and is the only place in the codebase that decides how a request changes state.
