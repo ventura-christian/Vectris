@@ -15,3 +15,13 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # This is the class the models will inherit from
 Base = declarative_base()
+
+
+# This function provides a database session to any route that needs one.
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    # Always close the request is done.
+    finally:
+        db.close()
