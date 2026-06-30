@@ -1,6 +1,6 @@
 # BUILD STATE
 
-Last Updated: June 28, 2026
+Last Updated: June 29, 2026
 
 Completed:
 
@@ -25,8 +25,6 @@ Completed:
 - All dependencies installed and verified
 - .env file created with database connection URL
 - Virtual environment confirmed able to connect to vectris database
-- Phase 0 complete
-- Phase 1 complete — all five technology concepts taught and understood
 - app/database/session.py — engine, SessionLocal, and Base
 - app/models/transport_request.py — TransportRequest SQLAlchemy model
 - app/models/transporter.py — Transporter SQLAlchemy model
@@ -35,7 +33,13 @@ Completed:
 - Alembic initialized and configured
 - First migration generated and applied
 - All three tables verified in PostgreSQL
-- Phase 2 complete
+- app/database/session.py — get_db() dependency injection function added
+- app/schemas/ directory and __init__.py created
+- app/schemas/transport_request.py — TransportRequestCreate and TransportRequestOut
+- app/schemas/transporter.py — TransporterCreate and TransporterOut
+- main.py — FastAPI app entry point with three routers registered
+- app/api/__init__.py, transport_requests.py, transporters.py, assignments.py — router stubs created
+- app/services/transport_request_service.py — create_request and update_status
 
 In Progress:
 
@@ -47,11 +51,12 @@ Broken:
 
 Not Started:
 
-- FastAPI API endpoints
 - Frontend dispatcher dashboard
 - Testing
 - Deployment
 - Presentation materials
+- Service layer — transporter_service.py and assignment_service.py remaining
+- API endpoints — transport_requests.py, transporters.py, assignments.py
 
 Technical Debt:
 
@@ -64,4 +69,4 @@ Technical Debt:
 
 Next Task:
 
-- Write main.py — FastAPI app entry point
+- Write app/services/transporter_service.py
