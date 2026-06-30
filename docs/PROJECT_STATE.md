@@ -1,6 +1,6 @@
 # PROJECT_STATE
 
-Last Updated: June 28, 2026
+Last Updated: June 29, 2026
 
 ## Current Phase
 
@@ -53,11 +53,14 @@ Completed:
 - SQLAlchemy models written for all three entities
 - Alembic initialized and first migration applied
 - All three tables verified in PostgreSQL
-- Phase 2 complete
+- Pydantic schemas written for transport requests and transporters
+- main.py created — FastAPI app boots and serves /docs
+- get_db() dependency injection added to session.py
+- transport_request_service.py written — create and status update
 
 In Progress:
 
-- Database Layer
+- API Layer
 
 Not Started:
 
@@ -94,8 +97,7 @@ Architecture:
 
 ## Next Actions
 
-1. Write main.py
-2. Write Pydantic schemas (app/schemas/)
-3. Write service layer
-4. Write API endpoints
-5. Build dispatcher dashboard
+1. Write transporter_service.py
+2. Write assignment_service.py
+3. Write API endpoints (transport_requests, transporters, assignments)
+4. Build dispatcher dashboard
