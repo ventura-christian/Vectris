@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Optional
 
 
-# What the caller send when creating a new transport request.
+# What the caller sends when creating a new transport request.
 class TransportRequestCreate(BaseModel):
     patient_name: str
     origin_department: str
@@ -14,7 +14,7 @@ class TransportRequestCreate(BaseModel):
     transporters_required: int = 1
 
 
-# What the API send back after reading from the database.
+# What the API sends back after reading from the database.
 class TransportRequestOut(BaseModel):
     id: int
     patient_name: str
