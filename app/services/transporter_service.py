@@ -4,7 +4,7 @@ from app.schemas.transporter import TransporterCreate
 from typing import Optional
 
 # The three valid status values for a transporter.
-VALID_STATUSES = {"available", "on_job", "on_break"}
+VALID_STATUSES = {'available', 'on_job', 'on_break'}
 
 
 def create_transporter(db: Session, data: TransporterCreate) -> Transporter:
@@ -27,7 +27,9 @@ def update_transporter_status(
     db: Session, transporter_id: int, new_status: str
 ) -> Optional[Transporter]:
     # Find the transporter or return None if it doesn't exist.
-    transporter = db.query(Transporter).filter(Transporter.id == transporter_id).first()
+    transporter = (
+        db.query(Transporter).filter(Transporter.id == transporter_id).first()
+    )
 
     if transporter is None:
         return None
