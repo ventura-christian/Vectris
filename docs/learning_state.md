@@ -1,6 +1,6 @@
 # LEARNING STATE
 
-Last Updated: June 28, 2026
+Last Updated: June 29, 2026
 
 Understood:
 
@@ -43,6 +43,12 @@ Understood:
 - Alembic migrations — init, autogenerate, upgrade workflow
 - Database sessions — engine, SessionLocal, Base pattern
 - Pydantic — schemas vs SQLAlchemy models, input/output separation, which fields to exclude
+- FastAPI dependency injection using Depends() and the get_db() generator pattern
+- Pydantic input vs output schema separation and why both are needed
+- Service layer implementation — separating business logic from API handlers
+- Resource management with Python generators (yield + finally)
+- SQLAlchemy session lifecycle — add, commit, refresh
+- State machine enforcement in the service layer
 
 Partially Understood:
 
@@ -52,11 +58,8 @@ Partially Understood:
 
 Not Learned Yet:
 
-- FastAPI dependency injection
-- Service layer implementation
-- Pydantic validation models
 - Testing
 
 Current Learning Objective:
 
-- Write main.py and understand how FastAPI wires together routes, templates, and the database
+- Write transporter and assignment service layers, then wire up API endpoints
