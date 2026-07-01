@@ -1,6 +1,6 @@
 # LEARNING STATE
 
-Last Updated: June 29, 2026
+> Last Updated: July 1, 2026
 
 Understood:
 
@@ -49,6 +49,11 @@ Understood:
 - Resource management with Python generators (yield + finally)
 - SQLAlchemy session lifecycle — add, commit, refresh
 - State machine enforcement in the service layer
+- State diagrams and why they catch invalid status transitions before code does
+- Entity relationship diagrams using Mermaid syntax
+- Checking a UI mockup against an already-decided schema instead of building straight from the mockup
+- Deriving a second UI signal (delayed) from the same time-based pattern used for priority
+- A service function that reaches into more than one table in a single operation
 
 Partially Understood:
 
@@ -62,4 +67,4 @@ Not Learned Yet:
 
 Current Learning Objective:
 
-- Write transporter and assignment service layers, then wire up API endpoints
+- Write the transporter API endpoints, then update the dashboard templates to match the corrected wireframe

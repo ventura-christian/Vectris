@@ -2,7 +2,7 @@
 
 This file defines the database tables for Vectris. These three tables support the core MVP workflows: creating a transport request, assigning a transporter, and completing a request.
 
-Last Updated: June 21, 2026
+> Last Updated: July 1, 2026
 
 ---
 

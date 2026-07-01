@@ -1,6 +1,6 @@
 # DECISIONS
 
-Last Updated: June 28, 2026
+> Last Updated: July 1, 2026
 
 ---
 
@@ -191,3 +191,37 @@ Why each entry?
 To enable autogenerate, all three SQLAlchemy models are explicitly imported in
 migrations/env.py and target_metadata is set to Base.metadata. Without these
 imports the models are never registered and Alembic generates an empty migration.
+
+---
+
+## Dashboard Mockup Checked Against Existing Decisions
+
+I built a wireframe for the dashboard before locking in the schema decisions, so a few things in it didn't match what I'd already decided.
+
+The wireframe had a priority field on the create-request form and on the assignment screen. I'd already decided against priority scoring when I chose time-in-queue as the ordering signal, so I dropped the field. The queue sorts oldest request first, and that's the only priority signal Vectris has.
+
+The wireframe also showed a department dropdown, but my department fields are plain free text because I didn't want to build a locations table before a single request could get created. I kept the free text decision and added a hardcoded list of about eight department names inside the template, so the dropdown works without touching the database. The column stays a plain VARCHAR with no foreign key.
+
+The wireframe's job detail screen showed a status history timeline listing every stage a request passed through. I don't store that anywhere. I ruled out an audit log table for the same reason earlier in this file, so I dropped the timeline and left the job detail screen showing only the current status.
+
+Three fields were just missing from the wireframe that the schema already requires: origin room, transporters required, and biohazard. I added all three back into the create-request form.
+
+---
+
+## Transporter Status Resets When a Request Completes
+
+Nothing in my code returned a transporter to available once their request was marked complete. Once assigned, a transporter stayed on_job until a dispatcher reset them by hand through the transporter endpoint.
+
+I considered leaving that manual, where the dispatcher confirms someone's back and flips their status themselves. I chose automatic instead. Completing a request now looks up who was assigned to it and sets their status back to available in the same action. A dispatcher already tracks enough without remembering a second step for every finished job.
+
+The tradeoff: a dispatcher can't hold someone back right after a job, say if they need a break immediately. That takes a second manual update through the transporter endpoint for now. Good enough for three users and an MVP.
+
+---
+
+## Delayed Requests Are Derived From Time in Queue
+
+The dashboard needs a panel showing requests that need attention, but nothing in my schema flags a request as delayed.
+
+I considered a stored column for this, something like is_delayed or flagged, set manually or by a background check. Instead I derive it the same way I derive priority: a request counts as delayed once it's been active past a fixed time threshold, calculated from created_at. No new column, no new place for the data to drift out of sync.
+
+The limitation is that this only measures how long something's been waiting, not why. A request stuck because equipment isn't available looks identical to one stuck because nobody's picked it up yet. A stored reason field would fix that, but it's not something the three MVP workflows need.
