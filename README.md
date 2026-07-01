@@ -2,7 +2,7 @@
 
 Hospital Patient Transport Operations Platform
 
-> Last Updated: June 28, 2026
+> Last Updated: July 1, 2026
 
 ## Project Overview
 
@@ -247,6 +247,42 @@ Define core entities:
 These entities will drive:
 
 Database → API → Dashboard
+
+## Running Locally
+
+Vectris needs Python 3.11+ and a running PostgreSQL instance.
+
+1. Clone the repo and set up a virtual environment:
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
+
+2. Create a `.env` file with your database connection string:
+
+   ```env
+   DATABASE_URL=postgresql://user:password@localhost/vectris
+   ```
+
+3. Apply the database migrations:
+
+   ```bash
+   alembic upgrade head
+   ```
+
+4. Start the server:
+
+   ```bash
+   uvicorn main:app --reload
+   ```
+
+5. Open `http://127.0.0.1:8000/docs` in a browser. This is FastAPI's auto-generated Swagger UI, and it's the current way to interact with Vectris. Every endpoint is listed there with a form to test it directly, no separate client needed.
+
+### Current Status
+
+Vectris is still under active development. See `docs/build_state.md` for exactly what's working right now.
 
 ## Repository Structure
 
